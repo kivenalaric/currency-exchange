@@ -7,7 +7,10 @@ import Transaction from './pages/Transaction_Page/Transaction';
 
 function App() {
   const ApiKey = '9ae526ed6fbd187fe86fec56bea85500';
-  const [baseCurrency, setMyBaseCurrency] = useState('');
+  const [baseCurrency, setMyBaseCurrency] = useState({
+    baseAmnt: 0,
+    baseCurr: '',
+  });
   const [totalAmount, setTotalAmount] = useState(0);
   const [dispWallet, setDispWallet] = useState(null);
   const [wallet, setWallet] = useState([]);
@@ -25,7 +28,7 @@ function App() {
         setFetchedCurrencyOptions([...Object.keys(data.rates)]);
         setFetchedCurrencyRates(data);
       } catch (err) {
-        console.error(err);
+        throw new Error(err);
       }
     };
     fetchData();

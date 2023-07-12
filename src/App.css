@@ -25,6 +25,7 @@
 .welcome {
   font-size: 3rem;
   background: -webkit-linear-gradient(#083fd0, #0179be, #00efc5);
+  background-clip: initial;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
