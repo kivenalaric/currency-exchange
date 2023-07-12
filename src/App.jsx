@@ -1,72 +1,63 @@
+/* eslint-disable react/jsx-no-constructed-context-values */
 import React, { useState, useEffect } from 'react';
 import './App.css';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MyContext from './context/context';
+import Transaction from './pages/Transaction_Page/Transaction';
 
 function App() {
-  const ApiKey = '4916f6bf3ce83e632400a62c535089a1';
-  const [myCurrency, setMycurrency] = useState();
-  const [currencies, setCurrencies] = useState();
-  const [myCurrency1, setMycurrency1] = useState();
+  const ApiKey = '9ae526ed6fbd187fe86fec56bea85500';
+  const [baseCurrency, setMyBaseCurrency] = useState('');
+  const [totalAmount, setTotalAmount] = useState(0);
+  const [dispWallet, setDispWallet] = useState(null);
+  const [wallet, setWallet] = useState([]);
+  const [fetchedCurrencyOptions, setFetchedCurrencyOptions] = useState([]);
+  const [modal, setModal] = useState(false);
+  const [fetchedCurrencyRates, setFetchedCurrencyRates] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://api.exchangeratesapi.io/v1/latest?access_key=${ApiKey}`
+          `http://data.fixer.io/api/latest?access_key=${ApiKey}`
         );
         const data = await response.json();
-        setCurrencies(data);
-        localStorage.setItem('rates', JSON.stringify(data));
+        setFetchedCurrencyOptions([...Object.keys(data.rates)]);
+        setFetchedCurrencyRates(data);
       } catch (err) {
         console.error(err);
       }
     };
     fetchData();
-    // fetch(`https://api.freecurrencyapi.com/v1latest?apikey=${ApiKey}`, options)
-    //   .then((response) => response.json())
-    //   .then((res) => {
-    //     // const firstRate = Object.keys(res.results)[2];
-    //     // setCurrencyOptions([...Object.keys(res.results)]);
-    //     // setExchangeRates(res.results);
-    //   })
-    //   .catch((err) => console.error('error ocured', err));
   }, []);
 
-  const saveToLs = () => {
-    const data = localStorage.setItem('currencies', JSON.stringify(myCurrency));
-    console.log(data);
-    return data;
+  const toogleModal = () => {
+    setModal((prev) => !prev);
   };
-  const getFromLs = () => {
-    const data1 = localStorage.getItem('rates');
-    const data2 = JSON.parse(data1);
-    setMycurrency1(data2);
-    console.log(data2);
-    return data2;
-  };
+
   return (
-    <div id="main">
-      <div id="nav">
-        <h2>logo</h2>
-        <h2>menu</h2>
-      </div>
-      <div id="hero">
-        <h1 className="welcome">Welcome to the Exchange App</h1>
-        <input
-          type="text"
-          placeholder="type the currency"
-          onChange={(e) => setMycurrency(e.target.value)}
-        />
-        <button type="button" onClick={saveToLs}>
-          Set Data
-        </button>
-        <button type="button" onClick={getFromLs}>
-          Get Data
-        </button>
-        {currencies ? <p>fetched and saved </p> : <p>still fetching</p>}
-        {/* <p>{currencies}</p> */}
-        <p>{myCurrency1}</p>
-      </div>
-    </div>
+    <MyContext.Provider
+      value={{
+        fetchedCurrencyOptions,
+        fetchedCurrencyRates,
+        toogleModal,
+        modal,
+        wallet,
+        setWallet,
+        baseCurrency,
+        setMyBaseCurrency,
+        dispWallet,
+        setDispWallet,
+        totalAmount,
+        setTotalAmount,
+      }}
+    >
+      <BrowserRouter>
+        <Routes>
+          <Route index path="/" element={<Transaction />} />
+        </Routes>
+      </BrowserRouter>
+    </MyContext.Provider>
   );
 }
 
