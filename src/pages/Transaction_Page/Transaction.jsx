@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import {
   Main,
   Hero,
@@ -14,16 +14,11 @@ import Navbar from '../../components/mavbar';
 import '../../App.css';
 import DepositModal from '../../components/DepositModal/DepositModal';
 import MyContext from '../../context/context';
-import { getFromLocalStorage } from '../../services/utils';
 import CurrencyCard from '../../components/currency-card/CurrencyCard';
 
 function Transaction() {
-  const { modal, toogleModal, dispWallet, setDispWallet } =
-    useContext(MyContext);
-  useEffect(() => {
-    const walletFromLocalStorage = getFromLocalStorage('wallet') || [];
-    setDispWallet(walletFromLocalStorage);
-  }, []);
+  const { modal, toogleModal, dispWallet } = useContext(MyContext);
+
   return (
     <Main>
       <Navbar />

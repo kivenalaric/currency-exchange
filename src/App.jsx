@@ -4,6 +4,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MyContext from './context/context';
 import Transaction from './pages/Transaction_Page/Transaction';
+import { getFromLocalStorage } from './services/utils';
 
 function App() {
   const ApiKey = '9ae526ed6fbd187fe86fec56bea85500';
@@ -32,6 +33,9 @@ function App() {
       }
     };
     fetchData();
+
+    const walletFromLocalStorage = getFromLocalStorage('wallet') || [];
+    setDispWallet(walletFromLocalStorage);
   }, []);
 
   const toogleModal = () => {

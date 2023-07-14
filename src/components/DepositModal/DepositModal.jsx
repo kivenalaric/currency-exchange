@@ -14,12 +14,31 @@ import { saveToLocalStorage } from '../../services/utils';
 
 function DepositModal() {
   const [money, setMoney] = useState({ amount: 0, currency: '' });
-  const { wallet, setWallet, fetchedCurrencyOptions, toogleModal } =
-    useContext(MyContext);
+  const {
+    wallet,
+    dispWallet,
+    setDispWallet,
+    fetchedCurrencyOptions,
+    toogleModal,
+  } = useContext(MyContext);
   const depositToWallet = () => {
+    const prevCur = dispWallet.find((wall) => wall.currency === money.currency);
+    if (prevCur) {
+      const update = dispWallet.map((cur) => {
+        if (cur.currency === money.currency) {
+          return { ...cur, amount: +cur.amount + +money.amount };
+        }
+        return cur;
+      });
+
+      setDispWallet([...update]);
+      saveToLocalStorage('wallet', [...update]);
+      return;
+    }
     const update = wallet;
     update.push(money);
-    setWallet([...update]);
+    setDispWallet([...update]);
+
     saveToLocalStorage('wallet', [...update]);
   };
 

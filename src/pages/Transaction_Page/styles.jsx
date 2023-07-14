@@ -67,9 +67,10 @@ export const Button = styled.button`
 
 export const TransactionSection = styled.div`
   width: 97vw;
-  max-width: 1000px;
+  max-width: 1200px;
   margin: auto;
   display: flex;
+  align-items: center;
   flex-direction: column;
   padding: 1.5rem 1.9rem;
 `;
@@ -86,5 +87,14 @@ export const WalletMain = styled.div`
   align-items: center;
   padding: 0.8rem 1.2rem;
   width: 97vw;
-  max-width: 1280px;
+  margin: 'auto';
+  max-width: 1000px;
+  @media only screen and (max-width: 798px) {
+    grid-template-columns: auto auto;
+  }
+  @media only screen and (max-width: 425px) {
+    display: flex;
+    flex-direction: 'column';
+    align-items: center;
+  }
 `;
