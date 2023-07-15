@@ -17,6 +17,7 @@ function App() {
   const [wallet, setWallet] = useState([]);
   const [fetchedCurrencyOptions, setFetchedCurrencyOptions] = useState([]);
   const [modal, setModal] = useState(false);
+  const [modal2, setModal2] = useState(false);
   const [fetchedCurrencyRates, setFetchedCurrencyRates] = useState([]);
 
   useEffect(() => {
@@ -38,6 +39,10 @@ function App() {
     setDispWallet(walletFromLocalStorage);
   }, []);
 
+  const toogleModal2 = () => {
+    setModal2((prev) => !prev);
+  };
+
   const toogleModal = () => {
     setModal((prev) => !prev);
   };
@@ -57,6 +62,8 @@ function App() {
         setDispWallet,
         totalAmount,
         setTotalAmount,
+        toogleModal2,
+        modal2,
       }}
     >
       <BrowserRouter>

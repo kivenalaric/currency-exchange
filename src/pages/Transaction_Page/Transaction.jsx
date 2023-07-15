@@ -9,15 +9,41 @@ import {
   HeroLeft,
   HeroImg,
   WalletMain,
+  Select,
+  AddBaseCurrSec,
 } from './styles';
 import Navbar from '../../components/mavbar';
 import '../../App.css';
 import DepositModal from '../../components/DepositModal/DepositModal';
 import MyContext from '../../context/context';
 import CurrencyCard from '../../components/currency-card/CurrencyCard';
+import CloseBtn from '../../components/currency-card/CloseBtn/CloseBtn';
+import { saveToLocalStorage } from '../../services/utils';
 
 function Transaction() {
-  const { modal, toogleModal, dispWallet } = useContext(MyContext);
+  const {
+    modal,
+    modal2,
+    baseCurrency,
+    setMyBaseCurrency,
+    toogleModal,
+    fetchedCurrencyOptions,
+    toogleModal2,
+    dispWallet,
+  } = useContext(MyContext);
+
+  const handleCurrChange = (e) => {
+    setMyBaseCurrency((prev) => ({
+      ...prev,
+      currency: e.target.value,
+    }));
+  };
+
+  const addBaseCurrency = () => {
+    const base = baseCurrency;
+    saveToLocalStorage(base);
+    toogleModal2();
+  };
 
   return (
     <Main>
@@ -45,6 +71,29 @@ function Transaction() {
       </Hero>
       <TransactionSection>
         <Total>
+          <Button type="button" onClick={toogleModal2}>
+            Set Default
+          </Button>
+          {modal2 && (
+            <AddBaseCurrSec>
+              <CloseBtn onClick={toogleModal2} />
+              <Select
+                name="currency"
+                id="money"
+                value={baseCurrency.currency}
+                onChange={handleCurrChange}
+              >
+                {fetchedCurrencyOptions.map((option) => (
+                  <option value={option} id="option" key={option}>
+                    {option}
+                  </option>
+                ))}
+              </Select>
+              <Button type="button" onClick={() => addBaseCurrency}>
+                Add+
+              </Button>
+            </AddBaseCurrSec>
+          )}
           <h2>
             <span>Amount</span>
             <span>Currency</span>

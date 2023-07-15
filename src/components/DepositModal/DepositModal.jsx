@@ -11,6 +11,7 @@ import {
 import { Button } from '../../pages/Transaction_Page/styles';
 import MyContext from '../../context/context';
 import { saveToLocalStorage } from '../../services/utils';
+import CloseBtn from '../currency-card/CloseBtn/CloseBtn';
 
 function DepositModal() {
   const [money, setMoney] = useState({ amount: 0, currency: '' });
@@ -58,6 +59,7 @@ function DepositModal() {
 
   return (
     <Main>
+      <CloseBtn onClick={toogleModal} />
       <MainM>
         <h1>Make a deposit!</h1>
         <DepositInput>

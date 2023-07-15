@@ -47,10 +47,10 @@ export const HeroImg = styled.img`
 `;
 
 export const Button = styled.button`
-  background-color: #00efc5;
+  background-color: #042061;
   cursor: pointer;
   color: #fefefe;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   border-radius: 25px;
   padding: 0.5rem 1rem;
   border: none;
@@ -79,6 +79,28 @@ export const Total = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+`;
+
+export const AddBaseCurrSec = styled.div`
+  display: flex;
+  position: absolute;
+  z-index: 10;
+  /* margin: auto; */
+  gap: 0.8rem;
+  background-color: #5b5a7c78;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  top: 0;
+  left: 0;
+`;
+
+export const Select = styled.select`
+  padding: 0.5rem 0.8rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
 `;
 
 export const WalletMain = styled.div`
