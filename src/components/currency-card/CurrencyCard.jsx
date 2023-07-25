@@ -2,7 +2,7 @@
 import React from 'react';
 import './styles.css';
 
-function CurrencyCard({ amount, currency }) {
+function CurrencyCard({ amount, currency, onClick }) {
   return (
     <div className="main">
       <div className="cardleft">
@@ -14,7 +14,9 @@ function CurrencyCard({ amount, currency }) {
       </div>
       <div className="cardright">
         <p>{currency}</p>
-        <button type="button">convert</button>
+        <button type="button" onClick={onClick}>
+          Transfer
+        </button>
       </div>
     </div>
   );

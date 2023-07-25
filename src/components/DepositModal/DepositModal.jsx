@@ -10,7 +10,7 @@ import {
 } from './styles';
 import { Button } from '../../pages/Transaction_Page/styles';
 import MyContext from '../../context/context';
-import { saveToLocalStorage } from '../../services/utils';
+import { saveToLocalStorage, toBaseCurrency } from '../../services/utils';
 import CloseBtn from '../currency-card/CloseBtn/CloseBtn';
 
 function DepositModal() {
@@ -19,9 +19,12 @@ function DepositModal() {
     wallet,
     dispWallet,
     setDispWallet,
-    fetchedCurrencyOptions,
+    fetchedCurrencyRates,
     toogleModal,
+    baseCurrency,
+    setMyBaseCurrency,
   } = useContext(MyContext);
+
   const depositToWallet = () => {
     const prevCur = dispWallet.find((wall) => wall.currency === money.currency);
     if (prevCur) {
@@ -32,6 +35,11 @@ function DepositModal() {
         return cur;
       });
 
+      // calculate baseAmount;
+      const res = toBaseCurrency(update, baseCurrency, fetchedCurrencyRates);
+      // console.log({ res, update, baseCurrency, fetchedCurrencyRates });
+      setMyBaseCurrency((prev) => ({ ...prev, baseAmnt: res }));
+
       setDispWallet([...update]);
       saveToLocalStorage('wallet', [...update]);
       return;
@@ -39,7 +47,9 @@ function DepositModal() {
     const update = wallet;
     update.push(money);
     setDispWallet([...update]);
-
+    const res = toBaseCurrency(update, baseCurrency, fetchedCurrencyRates);
+    // console.log({ res, update, baseCurrency, fetchedCurrencyRates });
+    setMyBaseCurrency((prev) => ({ ...prev, baseAmnt: res }));
     saveToLocalStorage('wallet', [...update]);
   };
 
@@ -85,9 +95,10 @@ function DepositModal() {
                 value={money.currency}
                 onChange={handleCurrChange}
               >
-                {fetchedCurrencyOptions.map((option) => (
+                {[...Object.keys(fetchedCurrencyRates)].map((option) => (
                   <option value={option} id="option" key={option}>
                     {option}
+                    {/* {`${option} : ${fetchedCurrencyRates[option]}`} */}
                   </option>
                 ))}
               </Select>

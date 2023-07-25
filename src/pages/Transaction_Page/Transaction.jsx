@@ -18,7 +18,8 @@ import DepositModal from '../../components/DepositModal/DepositModal';
 import MyContext from '../../context/context';
 import CurrencyCard from '../../components/currency-card/CurrencyCard';
 import CloseBtn from '../../components/currency-card/CloseBtn/CloseBtn';
-import { saveToLocalStorage } from '../../services/utils';
+import { saveToLocalStorage, toBaseCurrency } from '../../services/utils';
+import TransferModal from '../../components/transfer/TransferModal';
 
 function Transaction() {
   const {
@@ -27,21 +28,21 @@ function Transaction() {
     baseCurrency,
     setMyBaseCurrency,
     toogleModal,
-    fetchedCurrencyOptions,
+    // fetchedCurrencyOptions,
+    fetchedCurrencyRates,
     toogleModal2,
     dispWallet,
+    transModal,
+    toogleTransModal,
   } = useContext(MyContext);
 
-  const handleCurrChange = (e) => {
-    setMyBaseCurrency((prev) => ({
-      ...prev,
-      currency: e.target.value,
-    }));
-  };
-
-  const addBaseCurrency = () => {
-    const base = baseCurrency;
-    saveToLocalStorage(base);
+  const addBaseCurrency = (e) => {
+    const base = e.target.value;
+    setMyBaseCurrency({ ...baseCurrency, baseCurr: base });
+    const res = toBaseCurrency(dispWallet, baseCurrency, fetchedCurrencyRates);
+    console.log({ dispWallet, baseCurrency, fetchedCurrencyRates });
+    setMyBaseCurrency((prev) => ({ ...prev, baseAmnt: res }));
+    saveToLocalStorage('default', base);
     toogleModal2();
   };
 
@@ -77,26 +78,21 @@ function Transaction() {
           {modal2 && (
             <AddBaseCurrSec>
               <CloseBtn onClick={toogleModal2} />
-              <Select
-                name="currency"
-                id="money"
-                value={baseCurrency.currency}
-                onChange={handleCurrChange}
-              >
-                {fetchedCurrencyOptions.map((option) => (
+              <Select name="currency" id="money" onChange={addBaseCurrency}>
+                {[...Object.keys(fetchedCurrencyRates)].map((option) => (
                   <option value={option} id="option" key={option}>
                     {option}
                   </option>
                 ))}
               </Select>
-              <Button type="button" onClick={() => addBaseCurrency}>
+              {/* <Button type="button" onClick={() => addBaseCurrency}>
                 Add+
-              </Button>
+              </Button> */}
             </AddBaseCurrSec>
           )}
           <h2>
-            <span>Amount</span>
-            <span>Currency</span>
+            <span>{baseCurrency.baseAmnt}</span>
+            <span>{baseCurrency.baseCurr}</span>
           </h2>
           <Button type="button" onClick={toogleModal}>
             Deposit+
@@ -108,10 +104,12 @@ function Transaction() {
               amount={money.amount}
               key={money.currency}
               currency={money.currency}
+              onClick={toogleTransModal}
             />
           ))}
         </WalletMain>
       </TransactionSection>
+      {transModal && <TransferModal />}
       {modal && <DepositModal />}
     </Main>
   );
