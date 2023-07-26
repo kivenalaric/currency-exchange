@@ -28,15 +28,43 @@ export const Select = styled.select`
 `;
 
 function TransferModal() {
-  const { fetchedCurrencyRates, toogleTransModal } = useContext(MyContext);
+  const { fetchedCurrencyRates, toogleTransModal, dispWallet, setDispWallet } =
+    useContext(MyContext);
   const [amount, setAmount] = useState('');
   const [fromCurrency, setFromCurrency] = useState('');
   const [toCurrency, setToCurrency] = useState('');
 
+  //   const transferMoney = (e) => {
+  //     e.preventDefault();
+  //     console.log(fromCurrency, toCurrency, amount);
+  //     toogleTransModal();
+  //   };
   const transferMoney = (e) => {
     e.preventDefault();
-    console.log(fromCurrency, toCurrency, amount);
-    toogleTransModal();
+    // find the index of the 'from' wallet in the array
+    const fromIndex = dispWallet.findIndex(
+      (wallet) => wallet.currency === fromCurrency
+    );
+    if (fromIndex === -1) {
+      throw new Error(`Wallet ${fromCurrency} not found`);
+    }
+    // find the index of the 'to' wallet in the array
+    const toIndex = dispWallet.findIndex(
+      (wallet) => wallet.currency === toCurrency
+    );
+    if (toIndex === -1) {
+      throw new Error(`Wallet ${toCurrency} not found`);
+    }
+    // check if the 'from' wallet has enough balance
+    if (dispWallet[fromIndex].amount < amount) {
+      throw new Error(`Insufficient balance in ${fromCurrency} wallet`);
+    }
+    // update the wallets array with the transferred amount
+    const updatedWallets = [...dispWallet];
+    updatedWallets[fromIndex].amount -= amount;
+    updatedWallets[toIndex].amount += amount;
+    // update the state with the new wallets array
+    setDispWallet(updatedWallets);
   };
 
   return (

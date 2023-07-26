@@ -33,3 +33,32 @@ export const toBaseCurrency = (wallets, baseCurrency, rates) => {
   saveToLocalStorage('baseAmount', total);
   return total;
 };
+
+// export const transferMoney = (wallet, fromCurr, toCCurr) => {
+//   let amount;
+// }
+
+// export const transferMoney = (amount, fromCurrency, toCurrency) => {
+//   // find the index of the 'from' wallet in the array
+//   const fromIndex = wallets.findIndex(
+//     (wallet) => wallet.currency === fromCurrency
+//   );
+//   if (fromIndex === -1) {
+//     throw new Error(`Wallet ${fromCurrency} not found`);
+//   }
+//   // find the index of the 'to' wallet in the array
+//   const toIndex = wallets.findIndex((wallet) => wallet.currency === toCurrency);
+//   if (toIndex === -1) {
+//     throw new Error(`Wallet ${toCurrency} not found`);
+//   }
+//   // check if the 'from' wallet has enough balance
+//   if (wallets[fromIndex].amount < amount) {
+//     throw new Error(`Insufficient balance in ${fromCurrency} wallet`);
+//   }
+//   // update the wallets array with the transferred amount
+//   const updatedWallets = [...wallets];
+//   updatedWallets[fromIndex].amount -= amount;
+//   updatedWallets[toIndex].amount += amount;
+//   // update the state with the new wallets array
+//   setWallets(updatedWallets);
+// };
