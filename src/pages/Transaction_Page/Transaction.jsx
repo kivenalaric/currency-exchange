@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Main,
   Hero,
@@ -24,24 +24,23 @@ function Transaction() {
   const {
     modal,
     modal2,
-    baseCurrency,
-    setMyBaseCurrency,
     toogleModal,
     fetchedCurrencyOptions,
     toogleModal2,
     dispWallet,
   } = useContext(MyContext);
 
+  const [base, setBase] = useState({ amount: 0, currency: '' });
+
   const handleCurrChange = (e) => {
-    setMyBaseCurrency((prev) => ({
+    setBase((prev) => ({
       ...prev,
-      currency: e.target.value,
+      baseCurr: e.target.value,
     }));
   };
 
   const addBaseCurrency = () => {
-    const base = baseCurrency;
-    saveToLocalStorage(base);
+    saveToLocalStorage('basecurrency', base);
     toogleModal2();
   };
 
@@ -80,7 +79,7 @@ function Transaction() {
               <Select
                 name="currency"
                 id="money"
-                value={baseCurrency.currency}
+                value={base.currency}
                 onChange={handleCurrChange}
               >
                 {fetchedCurrencyOptions.map((option) => (
@@ -94,10 +93,13 @@ function Transaction() {
               </Button>
             </AddBaseCurrSec>
           )}
-          <h2>
-            <span>Amount</span>
-            <span>Currency</span>
-          </h2>
+          {/* {baseCurrency.map((data) => (
+            <h2 key={data.currency}>
+              <span>{data.currency}</span>
+              <span>{data.amount}</span>
+            </h2>
+          ))} */}
+
           <Button type="button" onClick={toogleModal}>
             Deposit+
           </Button>

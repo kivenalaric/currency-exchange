@@ -37,6 +37,8 @@ function App() {
 
     const walletFromLocalStorage = getFromLocalStorage('wallet') || [];
     setDispWallet(walletFromLocalStorage);
+    const baseFromLocalStorage = getFromLocalStorage('basecurrency') || 0;
+    setMyBaseCurrency(baseFromLocalStorage);
   }, []);
 
   const toogleModal2 = () => {

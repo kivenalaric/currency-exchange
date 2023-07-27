@@ -87,7 +87,7 @@ export const AddBaseCurrSec = styled.div`
   z-index: 10;
   /* margin: auto; */
   gap: 0.8rem;
-  background-color: #5b5a7c78;
+  background-color: #5b5a7b99;
   justify-content: center;
   width: 100vw;
   height: 100vh;
