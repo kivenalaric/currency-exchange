@@ -46,7 +46,7 @@ export function transferMoney(wallets, from, to, amount, rates) {
   // check if both wallets exist in the array
   if (fromIndex === -1 || toIndex === -1) {
     setTimeout(() => {
-      alert('Invalid currency');
+      return <p>Invalid currency</p>;
     }, 3000);
     throw Error('invalid currency');
   }
@@ -58,7 +58,7 @@ export function transferMoney(wallets, from, to, amount, rates) {
   // check if there is enough balance in the from wallet
   if (wallets[fromIndex].amount < amount) {
     setTimeout(() => {
-      alert('Insufficient balance');
+      return <p>Insufficient balance</p>;
 
       // return <p>Insufficient balance</p>;
     }, 3000);
