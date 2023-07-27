@@ -49,9 +49,10 @@ function App() {
       baseFromLocalStorage,
       fetchedCurrencyRates
     );
+
+    setDispWallet(walletFromLocalStorage);
     const basetotal = getFromLocalStorage('baseAmount') || 0;
     setMyBaseCurrency((prev) => ({ ...prev, baseAmnt: basetotal }));
-    setDispWallet(walletFromLocalStorage);
   }, []);
 
   const toogleModal2 = () => {

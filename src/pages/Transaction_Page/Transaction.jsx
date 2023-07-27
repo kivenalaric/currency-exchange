@@ -27,6 +27,10 @@ const BaseM = styled.h2`
   display: flex;
   gap: 0.8rem;
   align-items: center;
+  @media only screen and (max-width: 425px) {
+    font-size: 1.1rem;
+    gap: 0.2rem;
+  }
 `;
 
 function Transaction() {
@@ -74,7 +78,7 @@ function Transaction() {
         </HeroRight>
         <HeroLeft>
           <HeroImg
-            src="https://e7.pngegg.com/pngimages/916/540/png-clipart-feature-phone-smartphone-handheld-devices-iphone-crypto-coin-gadget-electronics.png"
+            src="https://o.remove.bg/downloads/8e19f4a7-7f0c-43f3-add1-6ffd018c3fe7/2105281-middle-removebg-preview.png"
             alt="phone"
           />
         </HeroLeft>
