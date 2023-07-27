@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import styled from 'styled-components';
 import {
   Main,
   Hero,
@@ -21,6 +22,12 @@ import CurrencyCard from '../../components/currency-card/CurrencyCard';
 import CloseBtn from '../../components/currency-card/CloseBtn/CloseBtn';
 import { saveToLocalStorage, sumWallet } from '../../services/utils';
 import TransferModal from '../../components/transfer/TransferModal';
+
+const BaseM = styled.h2`
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+`;
 
 function Transaction() {
   const {
@@ -92,10 +99,11 @@ function Transaction() {
               </Button> */}
             </AddBaseCurrSec>
           )}
-          <h2>
+          <BaseM>
+            Total:
             <span>{baseCurrency.baseAmnt}</span>
             <span>{baseCurrency.baseCurr}</span>
-          </h2>
+          </BaseM>
           <Button type="button" onClick={toogleModal}>
             Deposit+
           </Button>

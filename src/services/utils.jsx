@@ -30,9 +30,6 @@ export function sumWallet(wallet, base, rates) {
       const res = (+amount / rates[currency]) * rates[base];
       total += +res;
     }
-    console.log(
-      `iam total ${total}, currency: ${currency}, rate: ${rates[currency]}`
-    );
   });
   saveToLocalStorage('baseAmount', total);
   return total;

@@ -1,9 +1,11 @@
+/* eslint-disable no-plusplus */
 /* eslint-disable no-return-assign */
 /* eslint-disable react/jsx-no-bind */
 import React, { useContext, useState } from 'react';
 import { styled } from 'styled-components';
 // import { transferMoney } from '../../services/utils';
 import MyContext from '../../context/context';
+import { saveToLocalStorage } from '../../services/utils';
 
 const Modal = styled.div`
   display: flex;
@@ -45,11 +47,6 @@ function TransferModal() {
   const [fromCurrency, setFromCurrency] = useState('');
   const [toCurrency, setToCurrency] = useState('');
 
-  //   const transferMoney = (e) => {
-  //     e.preventDefault();
-  //     console.log(fromCurrency, toCurrency, amount);
-  //     toogleTransModal();
-  //   };
   const transferMoneyM = (e) => {
     e.preventDefault();
     // transferMoney(
@@ -87,19 +84,21 @@ function TransferModal() {
     // update the wallets array with the transferred amount
     const updatedWallets = [...dispWallet];
     updatedWallets[fromIndex].amount -= amount;
-    const transferAmount = +amount * +fetchedCurrencyRates[fromIndex];
-    updatedWallets[toIndex].amount += +transferAmount;
+    const transferAmount =
+      (+amount / fetchedCurrencyRates[fromCurrency]) *
+      fetchedCurrencyRates[toCurrency];
+    const money = parseInt(updatedWallets[toIndex].amount, 10);
+    updatedWallets[toIndex].amount = money + transferAmount;
+    updatedWallets[toIndex].amount = updatedWallets[toIndex].amount.toFixed(2);
     setTimeout(() => {
       setResponse(
         `from: ${fromIndex} to: ${toIndex}, transferAmount: ${transferAmount}`
       );
     }, 3000);
-    console.log(
-      `from ${fromIndex}, to ${toIndex}, transfer amount${transferAmount}`
-    );
+
     // update the state with the new wallets array
     setDispWallet(updatedWallets);
-    // saveToLocalStorage('wallet', dispWallet);
+    saveToLocalStorage('wallet', updatedWallets);
     toogleTransModal();
   };
 
