@@ -1,4 +1,7 @@
 /* eslint-disable consistent-return */
+
+import { render } from 'react-dom';
+
 /* eslint-disable no-param-reassign */
 export const getFromLocalStorage = (key) =>
   JSON.parse(localStorage.getItem(key));
@@ -45,8 +48,7 @@ export function transferMoney(wallets, from, to, amount, rates) {
     setTimeout(() => {
       alert('Invalid currency');
     }, 3000);
-    // ('Invalid currency');
-    return;
+    throw Error('invalid currency');
   }
 
   // calculate the amount to be transferred using the exchange rates
@@ -60,21 +62,22 @@ export function transferMoney(wallets, from, to, amount, rates) {
 
       // return <p>Insufficient balance</p>;
     }, 3000);
-    // ReactModal('Insufficient balance');
-    return;
+    throw Error('Insufficient balance');
   }
+  // ReactModal('Insufficient balance');
 
   // update the amounts in the wallets
   wallets[fromIndex].amount -= amount;
   wallets[toIndex].amount += transferAmount;
   setTimeout(() => {
-    alert(`Transferred ${amount} ${from} to ${to}`);
+    render(`Transferred ${amount} ${from} to ${to}`);
     // return (
     //   <p>
     //     Transferred {amount} {from} to {to}
     //   </p>
     // );
   }, 3000);
+
   // console.log(`Transferred ${amount} ${from} to ${to}`);
   // console.log(wallets, from, to, amount);
   return transferAmount;
