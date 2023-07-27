@@ -12,13 +12,14 @@ import {
   Select,
   AddBaseCurrSec,
 } from './styles';
+// import Photo from "../../public/pngegg.png";
 import Navbar from '../../components/mavbar';
 import '../../App.css';
 import DepositModal from '../../components/DepositModal/DepositModal';
 import MyContext from '../../context/context';
 import CurrencyCard from '../../components/currency-card/CurrencyCard';
 import CloseBtn from '../../components/currency-card/CloseBtn/CloseBtn';
-import { saveToLocalStorage, toBaseCurrency } from '../../services/utils';
+import { saveToLocalStorage, sumWallet } from '../../services/utils';
 import TransferModal from '../../components/transfer/TransferModal';
 
 function Transaction() {
@@ -41,10 +42,9 @@ function Transaction() {
   const addBaseCurrency = (e) => {
     const base = e.target.value;
     setMyBaseCurrency({ ...baseCurrency, baseCurr: base });
-    const res = toBaseCurrency(dispWallet, baseCurrency, fetchedCurrencyRates);
-    console.log({ dispWallet, baseCurrency, fetchedCurrencyRates });
+    const res = sumWallet(dispWallet, base, fetchedCurrencyRates);
     setMyBaseCurrency((prev) => ({ ...prev, baseAmnt: res }));
-    saveToLocalStorage('default', base);
+    saveToLocalStorage('baseCurr', base);
     toogleModal2();
   };
 
@@ -67,7 +67,7 @@ function Transaction() {
         </HeroRight>
         <HeroLeft>
           <HeroImg
-            src="http://localhost:3001/static/media/phone.e3e3b7c142a3f4511683.png"
+            src="https://e7.pngegg.com/pngimages/916/540/png-clipart-feature-phone-smartphone-handheld-devices-iphone-crypto-coin-gadget-electronics.png"
             alt="phone"
           />
         </HeroLeft>

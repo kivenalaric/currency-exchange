@@ -2,6 +2,7 @@
 /* eslint-disable react/jsx-no-bind */
 import React, { useContext, useState } from 'react';
 import { styled } from 'styled-components';
+// import { transferMoney } from '../../services/utils';
 import MyContext from '../../context/context';
 
 const Modal = styled.div`
@@ -27,9 +28,19 @@ export const Select = styled.select`
   border: none;
 `;
 
+const ResponseP = styled.div`
+  position: absolute;
+  top: 0;
+  margin: auto;
+  background-color: red;
+  color: white;
+  padding: 0.5rem 1.2rem;
+`;
+
 function TransferModal() {
   const { fetchedCurrencyRates, toogleTransModal, dispWallet, setDispWallet } =
     useContext(MyContext);
+  const [response, setResponse] = useState('');
   const [amount, setAmount] = useState('');
   const [fromCurrency, setFromCurrency] = useState('');
   const [toCurrency, setToCurrency] = useState('');
@@ -39,12 +50,20 @@ function TransferModal() {
   //     console.log(fromCurrency, toCurrency, amount);
   //     toogleTransModal();
   //   };
-  const transferMoney = (e) => {
+  const transferMoneyM = (e) => {
     e.preventDefault();
+    // transferMoney(
+    //   dispWallet,
+    //   fromCurrency,
+    //   toCurrency,
+    //   amount,
+    //   fetchedCurrencyRates
+    // );
     // find the index of the 'from' wallet in the array
     const fromIndex = dispWallet.findIndex(
       (wallet) => wallet.currency === fromCurrency
     );
+
     if (fromIndex === -1) {
       throw new Error(`Wallet ${fromCurrency} not found`);
     }
@@ -53,28 +72,44 @@ function TransferModal() {
       (wallet) => wallet.currency === toCurrency
     );
     if (toIndex === -1) {
+      setTimeout(() => {
+        setResponse(`Wallet ${toCurrency} not found`);
+      }, 3000);
       throw new Error(`Wallet ${toCurrency} not found`);
     }
     // check if the 'from' wallet has enough balance
     if (dispWallet[fromIndex].amount < amount) {
+      setTimeout(() => {
+        setResponse(`Insufficient balance in ${fromCurrency} wallet`);
+      }, 3000);
       throw new Error(`Insufficient balance in ${fromCurrency} wallet`);
     }
     // update the wallets array with the transferred amount
     const updatedWallets = [...dispWallet];
     updatedWallets[fromIndex].amount -= amount;
-    updatedWallets[toIndex].amount += amount;
+    const transferAmount = +amount * +fetchedCurrencyRates[fromIndex];
+    updatedWallets[toIndex].amount += +transferAmount;
+    setTimeout(() => {
+      setResponse(
+        `from: ${fromIndex} to: ${toIndex}, transferAmount: ${transferAmount}`
+      );
+    }, 3000);
+    console.log(
+      `from ${fromIndex}, to ${toIndex}, transfer amount${transferAmount}`
+    );
     // update the state with the new wallets array
     setDispWallet(updatedWallets);
+    // saveToLocalStorage('wallet', dispWallet);
+    toogleTransModal();
   };
 
   return (
     <Modal>
-      <h2>Make a Transfer</h2>
+      {response && <ResponseP>{response}</ResponseP>} <h2>Make a Transfer</h2>
       <button type="button" onClick={toogleTransModal}>
         close
       </button>
-
-      <form onSubmit={transferMoney}>
+      <form onSubmit={transferMoneyM}>
         <input
           type="number"
           name="amount"

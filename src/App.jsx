@@ -7,7 +7,7 @@ import Transaction from './pages/Transaction_Page/Transaction';
 import {
   getFromLocalStorage,
   saveToLocalStorage,
-  toBaseCurrency,
+  sumWallet,
 } from './services/utils';
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
   const [modal, setModal] = useState(false);
   const [transModal, setTransModal] = useState(false);
   const [modal2, setModal2] = useState(false);
-  const [fetchedCurrencyRates, setFetchedCurrencyRates] = useState({});
+  const [fetchedCurrencyRates, setFetchedCurrencyRates] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,19 +32,9 @@ function App() {
           `http://data.fixer.io/api/latest?access_key=${ApiKey}`
         );
         const data = await response.json();
-        console.log(data);
-        // setFetchedCurrencyOptions([
-        //   {
-        //     ...fetchedCurrencyOptions,
-        //     currency: [...Object.keys(data.rates)],
-        //     rates: data,
-        //   },
-        // ]);
-        // setFetchedCurrencyOptions([...Object.keys(data.rates)]);
         setFetchedCurrencyRates(data.rates);
         setMyBaseCurrency((prev) => ({ ...prev, baseCurr: data.base }));
         saveToLocalStorage('baseCurr', data.base);
-        saveToLocalStorage('baseAmount', 0);
       } catch (err) {
         throw new Error(err);
       }
@@ -52,12 +42,16 @@ function App() {
     fetchData();
 
     const walletFromLocalStorage = getFromLocalStorage('wallet') || [];
-    toBaseCurrency(walletFromLocalStorage, baseCurrency, fetchedCurrencyRates);
-    const basetotal = getFromLocalStorage('baseAmnt') || 0;
+    const baseFromLocalStorage = getFromLocalStorage('baseCurr');
+    setMyBaseCurrency(baseFromLocalStorage);
+    sumWallet(
+      walletFromLocalStorage,
+      baseFromLocalStorage,
+      fetchedCurrencyRates
+    );
+    const basetotal = getFromLocalStorage('baseAmount') || 0;
     setMyBaseCurrency((prev) => ({ ...prev, baseAmnt: basetotal }));
     setDispWallet(walletFromLocalStorage);
-    const baseFromLocalStorage = getFromLocalStorage('basecurrency') || 0;
-    setMyBaseCurrency(baseFromLocalStorage);
   }, []);
 
   const toogleModal2 = () => {
