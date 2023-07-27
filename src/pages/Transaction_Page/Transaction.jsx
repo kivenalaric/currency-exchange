@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import {
   Main,
   Hero,
@@ -32,9 +32,11 @@ function Transaction() {
     dispWallet,
     transModal,
     toogleTransModal,
+    setMyBaseCurrency,
+    baseCurrency,
   } = useContext(MyContext);
 
-  const [base, setBase] = useState({ amount: 0, currency: '' });
+  // const [base, setBase] = useState({ amount: 0, currency: '' });
 
   const addBaseCurrency = (e) => {
     const base = e.target.value;
