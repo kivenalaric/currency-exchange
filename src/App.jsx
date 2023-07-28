@@ -19,7 +19,6 @@ function App() {
   const [totalAmount, setTotalAmount] = useState(0);
   const [dispWallet, setDispWallet] = useState(null);
   const [wallet, setWallet] = useState([]);
-  // const [fetchedCurrencyOptions, setFetchedCurrencyOptions] = useState([]);
   const [modal, setModal] = useState(false);
   const [transModal, setTransModal] = useState(false);
   const [modal2, setModal2] = useState(false);
