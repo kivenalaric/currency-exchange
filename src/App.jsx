@@ -32,8 +32,17 @@ function App() {
         );
         const data = await response.json();
         setFetchedCurrencyRates(data.rates);
-        setMyBaseCurrency((prev) => ({ ...prev, baseCurr: data.base }));
-        saveToLocalStorage('baseCurr', data.base);
+        const baseC = getFromLocalStorage('baseCurr');
+        const baseA = getFromLocalStorage('baseAmount');
+        if (!baseC && !baseA) {
+          setMyBaseCurrency((prev) => ({
+            ...prev,
+            baseCurr: data.base,
+            baseAmnt: 0,
+          }));
+          saveToLocalStorage('baseCurr', data.base);
+          saveToLocalStorage('baseAmount', baseCurrency.baseAmnt);
+        }
       } catch (err) {
         throw new Error(err);
       }
@@ -41,11 +50,11 @@ function App() {
     fetchData();
 
     const walletFromLocalStorage = getFromLocalStorage('wallet') || [];
-    const baseFromLocalStorage = getFromLocalStorage('baseCurr');
-    setMyBaseCurrency(baseFromLocalStorage);
+    // const baseFromLocalStorage = getFromLocalStorage('baseCurr');
+    // setMyBaseCurrency(baseFromLocalStorage);
     sumWallet(
       walletFromLocalStorage,
-      baseFromLocalStorage,
+      baseCurrency.baseCurr,
       fetchedCurrencyRates
     );
 
