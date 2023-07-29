@@ -44,6 +44,12 @@ function App() {
           }));
           saveToLocalStorage('baseCurr', data.base);
           saveToLocalStorage('baseAmount', baseCurrency.baseAmnt);
+        } else {
+          setMyBaseCurrency((prev) => ({
+            ...prev,
+            baseCurr: baseC,
+            baseAmnt: baseA,
+          }));
         }
       } catch (err) {
         throw new Error(err);
