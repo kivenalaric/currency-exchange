@@ -4,11 +4,7 @@ import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import MyContext from './context/context';
 import Transaction from './pages/Transaction_Page/Transaction';
-import {
-  getFromLocalStorage,
-  saveToLocalStorage,
-  sumWallet,
-} from './services/utils';
+import { getFromLocalStorage, saveToLocalStorage } from './services/utils';
 
 function App() {
   const ApiKey = '763ac14c06-6e2d349805-ryjk1z';
