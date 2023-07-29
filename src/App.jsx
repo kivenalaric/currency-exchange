@@ -11,7 +11,7 @@ import {
 } from './services/utils';
 
 function App() {
-  const ApiKey = '4916f6bf3ce83e632400a62c535089a2';
+  const ApiKey = '328ccdaa23a35a9775c64ae4d3dc93e3';
   const [baseCurrency, setMyBaseCurrency] = useState({
     baseAmnt: 0,
     baseCurr: '',
@@ -28,7 +28,7 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://data.fixer.io/api/latest?access_key=${ApiKey}`
+          `https://api.exchangeratesapi.io/v1/latest?access_key=${ApiKey}`
         );
         const data = await response.json();
         setFetchedCurrencyRates(data.rates);
