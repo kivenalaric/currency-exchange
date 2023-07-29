@@ -11,7 +11,8 @@ import {
 } from './services/utils';
 
 function App() {
-  const ApiKey = '328ccdaa23a35a9775c64ae4d3dc93e3';
+  const ApiKey = '763ac14c06-6e2d349805-ryjk1z';
+  const options = { method: 'GET', headers: { accept: 'application/json' } };
   const [baseCurrency, setMyBaseCurrency] = useState({
     baseAmnt: 0,
     baseCurr: '',
@@ -28,10 +29,11 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `http://api.exchangeratesapi.io/v1/latest?access_key=${ApiKey}`
+          `https://api.fastforex.io/fetch-all?api_key=${ApiKey}`,
+          options
         );
         const data = await response.json();
-        setFetchedCurrencyRates(data.rates);
+        setFetchedCurrencyRates(data.results);
         const baseC = getFromLocalStorage('baseCurr');
         const baseA = getFromLocalStorage('baseAmount');
         if (!baseC && !baseA) {
