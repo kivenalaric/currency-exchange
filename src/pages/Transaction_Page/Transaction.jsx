@@ -68,7 +68,7 @@ function Transaction() {
           <h3>The Future of Exchange is here</h3>
           <small>
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius unde
-            accusamus maiores est exercitationem, incidunt rerum alias, numquam
+            accusamus maiores ests exercitationem, incidunt rerum alias, numquam
             optio aut officiis! Beatae corporis velit labore porro. Culpa
             dolores voluptatum vero. Lorem ipsum dolor sit amet consectetur
             adipisicing elit. Eius rerum ipsum natus quis unde minima laborum
