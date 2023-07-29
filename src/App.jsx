@@ -28,7 +28,7 @@ function App() {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `https://api.exchangeratesapi.io/v1/latest?access_key=${ApiKey}`
+          `http://api.exchangeratesapi.io/v1/latest?access_key=${ApiKey}`
         );
         const data = await response.json();
         setFetchedCurrencyRates(data.rates);
