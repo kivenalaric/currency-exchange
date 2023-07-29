@@ -17,7 +17,6 @@ function App() {
     baseAmnt: 0,
     baseCurr: '',
   });
-  const [totalAmount, setTotalAmount] = useState(0);
   const [dispWallet, setDispWallet] = useState(null);
   const [wallet, setWallet] = useState([]);
   const [modal, setModal] = useState(false);
@@ -26,6 +25,8 @@ function App() {
   const [fetchedCurrencyRates, setFetchedCurrencyRates] = useState([]);
 
   useEffect(() => {
+    const baseC = getFromLocalStorage('baseCurr');
+    const baseA = getFromLocalStorage('baseAmount');
     const fetchData = async () => {
       try {
         const response = await fetch(
@@ -34,8 +35,6 @@ function App() {
         );
         const data = await response.json();
         setFetchedCurrencyRates(data.results);
-        const baseC = getFromLocalStorage('baseCurr');
-        const baseA = getFromLocalStorage('baseAmount');
         if (!baseC && !baseA) {
           setMyBaseCurrency((prev) => ({
             ...prev,
@@ -60,15 +59,14 @@ function App() {
     const walletFromLocalStorage = getFromLocalStorage('wallet') || [];
     // const baseFromLocalStorage = getFromLocalStorage('baseCurr');
     // setMyBaseCurrency(baseFromLocalStorage);
-    sumWallet(
-      walletFromLocalStorage,
-      baseCurrency.baseCurr,
-      fetchedCurrencyRates
-    );
+    // sumWallet(
+    //   walletFromLocalStorage,
+    //   baseCurrency.baseCurr,
+    //   fetchedCurrencyRates
+    // );
 
     setDispWallet(walletFromLocalStorage);
-    const basetotal = getFromLocalStorage('baseAmount') || 0;
-    setMyBaseCurrency((prev) => ({ ...prev, baseAmnt: basetotal }));
+    setMyBaseCurrency((prev) => ({ ...prev, baseAmnt: baseA }));
   }, []);
 
   const toogleModal2 = () => {
@@ -96,8 +94,6 @@ function App() {
         setMyBaseCurrency,
         dispWallet,
         setDispWallet,
-        totalAmount,
-        setTotalAmount,
         toogleModal2,
         modal2,
         transModal,
