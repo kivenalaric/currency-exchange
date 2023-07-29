@@ -67,7 +67,7 @@ function Transaction() {
           <h1 className="welcome">Welcome to the Exchange App</h1>
           <h3>The Future of Exchange is here</h3>
           <small>
-            Lorema ipsuma dolor sit amet consectetur, adipisicing elit. Eius
+            Lorema ipsuma dolora sit amet consectetur, adipisicing elit. Eius
             unde accusamus maiores ests exercitationem, incidunt rerum alias,
             numquam optio aut officiis! Beatae corporis velit labore porro.
             Culpa dolores voluptatum vero. Lorem ipsum dolor sit amet
