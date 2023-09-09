@@ -11,7 +11,9 @@ import {
 } from './services/utils';
 
 function App() {
-  const ApiKey = '4916f6bf3ce83e632400a62c535089a2';
+  const ApiKey = '221306e5ac49f3bf88ef51ceccc3071d';
+  // yoxaheg448@cohodl.com
+  // const ApiKey = '5e5a7f8b86a4aca140b2eaa34ea38589';
   const [baseCurrency, setMyBaseCurrency] = useState({
     baseAmnt: 0,
     baseCurr: '',
@@ -32,7 +34,7 @@ function App() {
           `http://data.fixer.io/api/latest?access_key=${ApiKey}`
         );
         const data = await response.json();
-        console.log(data);
+        // console.log(data);
         // setFetchedCurrencyOptions([
         //   {
         //     ...fetchedCurrencyOptions,
