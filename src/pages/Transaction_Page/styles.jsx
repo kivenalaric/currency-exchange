@@ -43,6 +43,8 @@ export const HeroLeft = styled.div`
 
 export const HeroImg = styled.img`
   width: 90vw;
+  background: transparent;
+  max-height: 500px;
   max-width: 400px;
 `;
 
@@ -61,7 +63,8 @@ export const Button = styled.button`
     background-color: #fefefe;
   }
   @media only screen and (max-width: 426px) {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    padding: 0.3rem 0.7rem;
   }
 `;
 
@@ -79,6 +82,12 @@ export const Total = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  @media only screen and (max-width: 425px) {
+    flex-wrap: wrap;
+    width: 96vw;
+    padding: 1.3rem 1rem;
+    gap: 0.7rem;
+  }
 `;
 
 export const AddBaseCurrSec = styled.div`
@@ -87,7 +96,7 @@ export const AddBaseCurrSec = styled.div`
   z-index: 10;
   /* margin: auto; */
   gap: 0.8rem;
-  background-color: #5b5a7c78;
+  background-color: #5b5a7b99;
   justify-content: center;
   width: 100vw;
   height: 100vh;
@@ -109,14 +118,15 @@ export const WalletMain = styled.div`
   align-items: center;
   padding: 0.8rem 1.2rem;
   width: 97vw;
+  gap: 1.3rem;
   margin: 'auto';
   max-width: 1000px;
   @media only screen and (max-width: 798px) {
     grid-template-columns: auto auto;
+    gap: 1.2rem;
   }
   @media only screen and (max-width: 425px) {
-    display: flex;
-    flex-direction: 'column';
+    grid-template-columns: auto;
     align-items: center;
   }
 `;

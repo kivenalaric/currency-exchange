@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import styled from 'styled-components';
 import {
   Main,
   Hero,
@@ -12,21 +13,30 @@ import {
   Select,
   AddBaseCurrSec,
 } from './styles';
+// import Photo from "../../public/pngegg.png";
 import Navbar from '../../components/mavbar';
 import '../../App.css';
 import DepositModal from '../../components/DepositModal/DepositModal';
 import MyContext from '../../context/context';
 import CurrencyCard from '../../components/currency-card/CurrencyCard';
 import CloseBtn from '../../components/currency-card/CloseBtn/CloseBtn';
-import { saveToLocalStorage, toBaseCurrency } from '../../services/utils';
+import { saveToLocalStorage, sumWallet } from '../../services/utils';
 import TransferModal from '../../components/transfer/TransferModal';
+
+const BaseM = styled.h2`
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+  @media only screen and (max-width: 425px) {
+    font-size: 1.1rem;
+    gap: 0.2rem;
+  }
+`;
 
 function Transaction() {
   const {
     modal,
     modal2,
-    baseCurrency,
-    setMyBaseCurrency,
     toogleModal,
     // fetchedCurrencyOptions,
     fetchedCurrencyRates,
@@ -34,15 +44,18 @@ function Transaction() {
     dispWallet,
     transModal,
     toogleTransModal,
+    setMyBaseCurrency,
+    baseCurrency,
   } = useContext(MyContext);
+
+  // const [base, setBase] = useState({ amount: 0, currency: '' });
 
   const addBaseCurrency = (e) => {
     const base = e.target.value;
     setMyBaseCurrency({ ...baseCurrency, baseCurr: base });
-    const res = toBaseCurrency(dispWallet, baseCurrency, fetchedCurrencyRates);
-    console.log({ dispWallet, baseCurrency, fetchedCurrencyRates });
+    const res = sumWallet(dispWallet, base, fetchedCurrencyRates);
     setMyBaseCurrency((prev) => ({ ...prev, baseAmnt: res }));
-    saveToLocalStorage('default', base);
+    saveToLocalStorage('baseCurr', base);
     toogleModal2();
   };
 
@@ -54,18 +67,19 @@ function Transaction() {
           <h1 className="welcome">Welcome to the Exchange App</h1>
           <h3>The Future of Exchange is here</h3>
           <small>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eius unde
-            accusamus maiores est exercitationem, incidunt rerum alias, numquam
-            optio aut officiis! Beatae corporis velit labore porro. Culpa
-            dolores voluptatum vero. Lorem ipsum dolor sit amet consectetur
-            adipisicing elit. Eius rerum ipsum natus quis unde minima laborum
-            nobis est deleniti, quas, impedit architecto possimus consectetur
-            laudantium asperiores. Assumenda libero temporibus exercitationem.
+            Lorema ipsuma dolora sit amet consectetur, adipisicing elit. Eius
+            unde accusamus maiores ests exercitationem, incidunt rerum alias,
+            numquam optio aut officiis! Beatae corporis velit labore porro.
+            Culpa dolores voluptatum vero. Lorem ipsum dolor sit amet
+            consectetur adipisicing elit. Eius rerum ipsum natus quis unde
+            minima laborum nobis est deleniti, quas, impedit architecto possimus
+            consectetur laudantium asperiores. Assumenda libero temporibus
+            exercitationem.
           </small>
         </HeroRight>
         <HeroLeft>
           <HeroImg
-            src="http://localhost:3001/static/media/phone.e3e3b7c142a3f4511683.png"
+            src="https://o.remove.bg/downloads/8e19f4a7-7f0c-43f3-add1-6ffd018c3fe7/2105281-middle-removebg-preview.png"
             alt="phone"
           />
         </HeroLeft>
@@ -90,10 +104,11 @@ function Transaction() {
               </Button> */}
             </AddBaseCurrSec>
           )}
-          <h2>
+          <BaseM>
+            Total:
             <span>{baseCurrency.baseAmnt}</span>
             <span>{baseCurrency.baseCurr}</span>
-          </h2>
+          </BaseM>
           <Button type="button" onClick={toogleModal}>
             Deposit+
           </Button>
