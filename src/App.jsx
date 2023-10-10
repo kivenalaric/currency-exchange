@@ -7,14 +7,8 @@ import Transaction from './pages/Transaction_Page/Transaction';
 import { getFromLocalStorage, saveToLocalStorage } from './services/utils';
 
 function App() {
-<<<<<<< HEAD
-  const ApiKey = '221306e5ac49f3bf88ef51ceccc3071d';
-  // yoxaheg448@cohodl.com
-  // const ApiKey = '5e5a7f8b86a4aca140b2eaa34ea38589';
-=======
-  const ApiKey = '763ac14c06-6e2d349805-ryjk1z';
+  const ApiKey = '6ebde43530287d1fef886116a4bd36a0';
   const options = { method: 'GET', headers: { accept: 'application/json' } };
->>>>>>> f1900768d50b838439e97213b6e8f35fba34692b
   const [baseCurrency, setMyBaseCurrency] = useState({
     baseAmnt: 0,
     baseCurr: '',
@@ -36,21 +30,6 @@ function App() {
           options
         );
         const data = await response.json();
-<<<<<<< HEAD
-        // console.log(data);
-        // setFetchedCurrencyOptions([
-        //   {
-        //     ...fetchedCurrencyOptions,
-        //     currency: [...Object.keys(data.rates)],
-        //     rates: data,
-        //   },
-        // ]);
-        // setFetchedCurrencyOptions([...Object.keys(data.rates)]);
-        setFetchedCurrencyRates(data.rates);
-        setMyBaseCurrency((prev) => ({ ...prev, baseCurr: data.base }));
-        saveToLocalStorage('baseCurr', data.base);
-        saveToLocalStorage('baseAmount', 0);
-=======
         setFetchedCurrencyRates(data.results);
         if (!baseC && !baseA) {
           setMyBaseCurrency((prev) => ({
@@ -67,7 +46,6 @@ function App() {
             baseAmnt: baseA,
           }));
         }
->>>>>>> f1900768d50b838439e97213b6e8f35fba34692b
       } catch (err) {
         throw new Error(err);
       }
