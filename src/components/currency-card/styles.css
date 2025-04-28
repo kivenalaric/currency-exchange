@@ -1,0 +1,45 @@
+.main {
+  margin: auto;
+  width: 80vw;
+  max-width: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #5a6a92;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.cardleft,
+.cardright {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: auto;
+  justify-content: space-between;
+  min-height: 70px;
+}
+
+.cardleft {
+  justify-self: flex-start;
+}
+
+.cardright {
+  justify-self: flex-end;
+  align-items: center;
+}
+
+.cardleft img {
+  width: 20%;
+  height: 20%;
+}
+
+.cardright button {
+  background-color: #00efc5;
+  color: #fcfcfc;
+  padding: 0.2rem 1rem;
+  font-size: 1.2rem;
+  border-radius: 10px;
+}
